@@ -1,69 +1,75 @@
+package ADS_Assignment_4;
+
 /**
- * Main class to demonstrate graph implementations and search algorithms.
+ * Main class to demonstrate the graph implementations and search algorithms.
  * This class creates graphs, adds edges, and runs different search algorithms.
  */
+
 public class Main {
 
     /**
      * Main method to run the demonstration.
      *
-     * @param args Command-line arguments (not used)
+     * @param args Command line arguments (not used)
      */
+
     public static void main(String[] args) {
-        // Create and populate a weighted graph
+        // Create and populate weighted graph
         WeightedGraph<String> weightedGraph = new WeightedGraph<>(true);
-        populateWithWeights(weightedGraph);
+        fillWithWeights(weightedGraph);
 
         // Run Dijkstra's algorithm
-        System.out.println("Dijkstra's Algorithm:");
-        Search<String> dijkstra = new DijkstraSearch<>(weightedGraph, "New York");
-        printPath(dijkstra, "Phoenix");
+        System.out.println("Dijkstra:");
+        Search<String> djk = new DijkstraSearch<>(weightedGraph, "Almaty");
+        outputPath(djk, "Kyzylorda");
         System.out.println("--------------------------------");
 
-        // Create and populate an unweighted graph
-        UnweightedGraph<String> unweightedGraph = new UnweightedGraph<>(true);
-        populateWithoutWeights(unweightedGraph);
+        // Create and populate unweighted graph
+        UnweightedGraph<String> graph = new UnweightedGraph<>(true);
+        fillWithoutWeights(graph);
 
         // Run Depth-First Search
-        System.out.println("Depth-First Search (DFS):");
-        Search<String> dfs = new DepthFirstSearch<>(unweightedGraph, "New York");
-        printPath(dfs, "Phoenix");
+        System.out.println("DFS:");
+        Search<String> dfs = new DepthFirstSearch<>(graph, "Almaty");
+        outputPath(dfs, "Kyzylorda");
         System.out.println("--------------------------------");
 
         // Run Breadth-First Search
-        System.out.println("Breadth-First Search (BFS):");
-        Search<String> bfs = new BreadthFirstSearch<>(weightedGraph, "New York");
-        printPath(bfs, "Phoenix");
+        System.out.println("BFS:");
+        Search<String> bfs = new BreadthFirstSearch<>(weightedGraph, "Almaty");
+        outputPath(bfs, "Kyzylorda");
     }
 
     /**
-     * Populates an unweighted graph with edges representing connections between U.S. cities.
+     * Populates an unweighted graph with edges representing connections between cities.
      *
      * @param graph The unweighted graph to populate
      */
-    public static void populateWithoutWeights(UnweightedGraph<String> graph) {
-        graph.addEdge("New York", "Chicago");
-        graph.addEdge("Los Angeles", "Houston");
-        graph.addEdge("Houston", "Chicago");
-        graph.addEdge("New York", "Los Angeles");
-        graph.addEdge("Los Angeles", "Chicago");
-        graph.addEdge("Chicago", "Seattle");
-        graph.addEdge("Los Angeles", "Phoenix");
+
+    public static void fillWithoutWeights(UnweightedGraph<String> graph) {
+        graph.addEdge("Almaty", "Astana");
+        graph.addEdge("Shymkent", "Atyrau");
+        graph.addEdge("Atyrau", "Astana");
+        graph.addEdge("Almaty", "Shymkent");
+        graph.addEdge("Shymkent", "Astana");
+        graph.addEdge("Astana", "Kostanay");
+        graph.addEdge("Shymkent", "Kyzylorda");
     }
 
     /**
-     * Populates a weighted graph with edges and weights representing distances between U.S. cities.
+     * Populates a weighted graph with edges and weights representing connections between cities.
      *
      * @param graph The weighted graph to populate
      */
-    public static void populateWithWeights(WeightedGraph<String> graph) {
-        graph.addEdge("New York", "Chicago", 790.0);
-        graph.addEdge("Los Angeles", "Houston", 1547.0);
-        graph.addEdge("Houston", "Chicago", 1084.0);
-        graph.addEdge("New York", "Los Angeles", 2445.0);
-        graph.addEdge("Los Angeles", "Chicago", 2015.0);
-        graph.addEdge("Chicago", "Seattle", 2064.0);
-        graph.addEdge("Los Angeles", "Phoenix", 373.0);
+
+    public static void fillWithWeights(WeightedGraph<String> graph) {
+        graph.addEdge("Almaty", "Astana", 2.1);
+        graph.addEdge("Shymkent", "Atyrau", 7.8);
+        graph.addEdge("Atyrau", "Astana", 7.1);
+        graph.addEdge("Almaty", "Shymkent", 7.2);
+        graph.addEdge("Shymkent", "Astana", 3.9);
+        graph.addEdge("Astana", "Kostanay", 3.5);
+        graph.addEdge("Shymkent", "Kyzylorda", 5.4);
     }
 
     /**
@@ -72,10 +78,11 @@ public class Main {
      * @param search The search algorithm that found the path
      * @param key The destination vertex
      */
-    public static void printPath(Search<String> search, String key) {
-        for (String city : search.pathTo(key)) {
-            System.out.print(city + " -> ");
+
+    public static void outputPath(Search<String> search, String key) {
+        for (String v : search.pathTo(key)) {
+            System.out.print(v + " -> ");
         }
-        System.out.println("END");
+        System.out.println();
     }
 }
